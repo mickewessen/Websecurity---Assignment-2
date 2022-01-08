@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Websecurity___Essay_2.Models.UserUploadFile>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<form id="uploadForm" asp-action="UploadFile" asp-controller="UserUploadFiles" method="post"
+      enctype="multipart/form-data" onsubmit="AJAXSubmit(this); return false;">
+    <dl>
+        <dt>
+            <label for="file">File</label>
+        </dt>
+        <dd>
+            <input id="file" type="file" name="file" />
+        </dd>
+    </dl>
+    <input class="btn btn-primary" type="submit" value="Upload" />
+    <div style="margin-top:15px">
+        <output form="uploadForm" name="result"></output>
+    </div>
+</form>
+
+@foreach (var item in Model)
+{
+    <div class="card mb-2" style="width: 18rem;">
+        <img class="card-img-top" src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Content))" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.FileName)</h5>            
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Uploaded: @Html.DisplayFor(modelItem => item.TimeStamp)</li>
+            <li class="list-group-item">Size: @item.ConvertSizeToMegaByte() <span>KB</span></li>
+            <li class="list-group-item">
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a> |
+                <a asp-action="Download" asp-route-id="@item.Id"><i class="fas fa-download"></i></a>
+
+            </li>
+        </ul>
+    </div>
+}
+

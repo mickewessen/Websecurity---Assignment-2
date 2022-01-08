@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Websecurity___Essay_2.Models.UserInput>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+
+@foreach (var item in Model)
+{
+    <div class="card mb-2">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Id)</h5>
+            <p>@Html.Raw(item.Content)</p>
+            <div>Written by:</div>
+            <p class="text-muted">@Html.Raw(item.Author) - @Html.DisplayFor(modelItem => item.TimeStamp)</p>
+            <p>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+            </p>
+        </div>
+    </div>
+}
